@@ -65,6 +65,16 @@ class AccountService:
 
             return acct_list
 
+    @staticmethod
+    def get_all_accounts_by_customer_id(customer_id):
+        account_details_received = AccountDao.get_all_accounts_by_customer_id(customer_id)
+        print(account_details_received)
+        account_details_list = account_details_received["account_details"]
+        print(type(account_details_list))
+        return {f"Account details of the customer with an id {customer_id}":
+                    list(map(lambda e: {"account_id": e[0], "balance": e[1], "customer_id": e[2]}, account_details_list))
+                }
+
     # def get_customer_accounts(self, dgt, dlt):
     #     customer_obj = self.customer_dao.get_all_customers()
     #     accounts = customer_obj.get_all_accounts()

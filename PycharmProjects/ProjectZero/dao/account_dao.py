@@ -27,18 +27,16 @@ class AccountDao:
 
         ## GET/customer/1/accounts
 
-    def get_all_accounts_by_customer_id(self, customer_id, ):
+    @staticmethod
+    def get_all_accounts_by_customer_id(customer_id):
         with psycopg.connect(host="127.0.0.1", port="5432", dbname="postgres", user="postgres",
                              password="Iloveyou27") as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT * FROM accounts WHERE customer_id = %s", (customer_id,))
 
-                account_list = []
-
-                for row in cur:
-                    account_list.append(Account(row[0], row[1], row[2]))
-
-                return account_list
+                all_accounts_details = cur.fetchall()
+                print(all_accounts_details)
+                return {"account_details": all_accounts_details}
 
     @staticmethod
     def get_account_by_id(customer_id, account_id):
